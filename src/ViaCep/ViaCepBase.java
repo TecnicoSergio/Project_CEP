@@ -81,8 +81,8 @@ public abstract class ViaCepBase {
             try {
                 URL url = new URL(urlToRead);
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                conn.setRequestMethod("GET);
-                        BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                conn.setRequestMethod("GET");
+                BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
                 String line;
                 while ((line = rd.readLine()) != null) {
                     result.append(line);
@@ -96,7 +96,7 @@ public abstract class ViaCepBase {
 
                 throw new ViaCEPException(ex.getMessage(), ex.getClass().getName());
             } catch (IOException ex) {
-                // verifica os Eventos
+
                 if (Events instanceof ViaCEPEvents) {
                     Events.onCEPError(currentCEP);
                 }
@@ -107,11 +107,7 @@ public abstract class ViaCepBase {
             return result.toString();
         }
 
-        /**
-         * Move para um registro específico
-         * @param index
-         * @return
-         */
+
         public boolean move(int index) {
             if (CEPs.size() > 0 && index >= 0 && index < CEPs.size()) {
                 this.index = index;
@@ -122,10 +118,7 @@ public abstract class ViaCepBase {
             return false;
         }
 
-        /**
-         * Move para o primeiro registro
-         * @return
-         */
+
         public boolean moveFirst() {
             if (CEPs.size() > 0) {
                 index = 0;
@@ -136,10 +129,7 @@ public abstract class ViaCepBase {
             return false;
         }
 
-        /**
-         * Move para o próximo registro
-         * @return
-         */
+
         public boolean moveNext() {
             if (CEPs.size() > 0 && (index + 1) < CEPs.size()) {
                 index += 1;
@@ -150,10 +140,7 @@ public abstract class ViaCepBase {
             return false;
         }
 
-        /**
-         * Move para o registro anterior
-         * @return
-         */
+
         public boolean movePrevious() {
             if (CEPs.size() > 0 && (index - 1) >= 0) {
                 index -= 1;
@@ -164,10 +151,7 @@ public abstract class ViaCepBase {
             return false;
         }
 
-        /**
-         * Move para o último registro
-         * @return
-         */
+
         public boolean moveLast() {
             if (CEPs.size() > 0) {
                 index = CEPs.size() - 1;
@@ -178,20 +162,12 @@ public abstract class ViaCepBase {
             return false;
         }
 
-        /**
-         * Retorna a lista de CEP's
-         * @return
-         */
+
         public List<CEP> getList() {
             return CEPs;
         }
 
-        /**
-         * Procedimento para formatar uma string para usar em urls
-         * @param string texto que vai ser formatado
-         * @return texto formatado
-         * @throws ViaCEPException em caso de erro
-         */
+        
         protected String formatStringToUri(String string) throws ViaCEPException {
             String out = null;
 
