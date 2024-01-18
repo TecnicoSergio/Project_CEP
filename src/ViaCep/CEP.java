@@ -1,6 +1,6 @@
 package ViaCep;
 
-public class Cep {
+public class CEP {
 
     public String cep;
     public String logradouro;
@@ -15,7 +15,7 @@ public class Cep {
     /**
      * Cria um novo cep vazio
      */
-    public Cep(){
+    public CEP(){
         this.logradouro = null;
         this.complemento = null;
         this.bairro = null;
@@ -37,7 +37,7 @@ public class Cep {
      * @param gia
      */
 
-    public Cep(String cep, String logradouro, String complemento, String bairro, String localidade, String uf, String ibje, String gia) {
+    public CEP(String cep, String logradouro, String complemento, String bairro, String localidade, String uf, String ibje, String gia) {
         this.cep = cep;
         this.logradouro = logradouro;
         this.complemento = complemento;
@@ -55,7 +55,7 @@ public class Cep {
      * @param uf
      */
 
-    public Cep(String logradouro, String localidade, String uf) {
+    public CEP(String logradouro, String localidade, String uf) {
         this.logradouro = logradouro;
         this.localidade = localidade;
         this.uf = uf;

@@ -36,7 +36,7 @@ public class ViaCEP extends ViaCepBase {
         String url = "http://viacep.com.br/ws" + cep + "/json/";
         JSObject obj = new JSObject(getHttpGET(url));
                 if (!obj.has("erro")) {
-                    Cep novoCEP = new Cep(obj.getString("cep"),
+                    CEP novoCEP = new CEP(obj.getString("cep"),
                             obj.getString("logradouro"),
                             obj.getString("complemento"),
                             obj.getString("bairro"),
@@ -75,7 +75,7 @@ public class ViaCEP extends ViaCepBase {
             for (int i = 0; i < ceps.length(); i++) {
                 JSObject obj = ceps.getJSONObject(i);
                 if (!obj.has("erro")){
-                    Cep novoCEP = new Cep(obj.getString("cep"),
+                    CEP novoCEP = new CEP(obj.getString("cep"),
                             obj.getString("logradouro"),
                             obj.getString("complemento"),
                             obj.getString("bairro"),
@@ -102,6 +102,6 @@ public class ViaCEP extends ViaCepBase {
     }
 
 
-
-
+    public String getCep() {
+    }
 }
