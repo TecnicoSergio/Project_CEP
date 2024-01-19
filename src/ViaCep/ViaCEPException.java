@@ -42,6 +42,7 @@ public class ViaCEPException extends Exception {
 
     /**
      * Retorna a classe da excessão original
+     *
      * @return
      */
     public String getClasse() {

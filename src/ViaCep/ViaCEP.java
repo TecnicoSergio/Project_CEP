@@ -1,21 +1,25 @@
 package ViaCep;
 
 
+import netscape.javascript.JSException;
 import netscape.javascript.JSObject;
+
+import java.io.Serializable;
+
+import static sun.security.util.ResourcesMgr.getString;
 
 public class ViaCEP extends ViaCepBase {
 
-    public static  final double VIACEP_VERSAO = 0.33;
+    public static final double VIACEP_VERSAO = 0.33;
 
-    public ViaCEP(){
+    public ViaCEP() {
         super();
     }
 
     /**
-     *
      * @param events
      */
-    public ViaCEP(ViaCepEvents events){
+    public ViaCEP(ViaCepEvents events) {
         super();
         this.Events = events;
     }
@@ -27,46 +31,87 @@ public class ViaCEP extends ViaCepBase {
     }
 
     //public final void Events(String events) throws ViaCepEvents {
-        //currentEvents = events;
+    //currentEvents = events;
     //}
 
     public final void buscar(String cep) throws ViaCEPException {
         currentCep = cep;
 
         String url = "http://viacep.com.br/ws" + cep + "/json/";
-        JSObject obj = new JSObject(getHttpGET(url));
-                if (!obj.has("erro")) {
-                    CEP novoCEP = new CEP(obj.getString("cep"),
-                            obj.getString("logradouro"),
-                            obj.getString("complemento"),
-                            obj.getString("bairro"),
-                            obj.getString("localidade"),
-                            obj.getString("uf"),
-                            obj.getString("ibge"),
-                            obj.getString("gia"));
+        JSObject obj = new JSObject(getHttpGET(url)) {
+            @Override
+            public Object call(String methodName, Object... args) throws JSException {
+                return null;
+            }
 
-                    CEPs.add(novoCEP);
-                    index = CEPs.size() - 1;
+            @Override
+            public Object eval(String s) throws JSException {
+                return null;
+            }
 
-                    if (Events instanceof ViaCepEvents) {
-                        Events.onCEPSuccess(this);
-                    }
+            @Override
+            public Object getMember(String name) throws JSException {
+                return null;
+            }
 
-                }else {
-                    if (Events instanceof ViaCepEvents) {
-                        Events.onCEPError(currentCep);
-                    }
-                    throw new ViaCEPException("Não foi possivel encontrar o CEP", cep, ViaCEPException.class.getName());
-                }
+            @Override
+            public void setMember(String name, Object value) throws JSException {
 
+            }
+
+            @Override
+            public void removeMember(String name) throws JSException {
+
+            }
+
+            @Override
+            public Object getSlot(int index) throws JSException {
+                return null;
+            }
+
+            @Override
+            public void setSlot(int index, Object value) throws JSException {
+
+            }
+        };
+        if (!has("erro")) {
+            CEP novoCEP = new CEP(getString("cep"),
+                    getString("logradouro"),
+                    getString("complemento"),
+                    getString("bairro"),
+                    getString("localidade"),
+                    getString("uf"),
+                    getString("ibge"),
+                    getString("gia"));
+
+            CEPs.add(novoCEP);
+            index = CEPs.size() - 1;
+
+            if (Events instanceof ViaCepEvents) {
+                Events.onCEPSuccess(this);
+            }
+
+        } else {
+            if (Events instanceof ViaCepEvents) {
+                Events.onCEPError(currentCep);
+            }
+            throw new ViaCEPException("Não foi possivel encontrar o CEP", cep, ViaCEPException.class.getName());
+        }
+
+    }
+
+    private boolean has(String erro) {
+    }
+
+    private Object getHttpGET(String url) {
     }
 
     public void buscarCEP(CEP cep) throws ViaCEPException {
         buscarCEP(cep.Uf, cep.Localidade, cep.Logradouro);
     }
 
-    public void buscarCEP(String Uf, String localidade, String logradouro) throws ViaCEPException {
-        currentCEP = "?????-???";
+    public Serializable buscarCEP(String Uf, String localidade, String logradouro) throws ViaCEPException {
+        currentCep = "?????-???";
 
         String url = "http://viacep.com.br/ws/" + Uf.toUpperCase() + "/" + localidade + "/" + logradouro + "/json";
 
@@ -74,34 +119,36 @@ public class ViaCEP extends ViaCepBase {
         if (ceps.length() > 0) {
             for (int i = 0; i < ceps.length(); i++) {
                 JSObject obj = ceps.getJSONObject(i);
-                if (!obj.has("erro")){
-                    CEP novoCEP = new CEP(obj.getString("cep"),
-                            obj.getString("logradouro"),
-                            obj.getString("complemento"),
-                            obj.getString("bairro"),
-                            obj.getString("localidade"),
-                            obj.getString("uf"),
-                            obj.getString("ibge"),
-                            obj.getString("gia"));
+                if (!has("erro")) {
+                    CEP novoCEP = new CEP(getString("cep"),
+                            getString("logradouro"),
+                            getString("complemento"),
+                            getString("bairro"),
+                            getString("localidade"),
+                            getString("uf"),
+                            getString("ibge"),
+                            getString("gia"));
 
                     CEPs.add(novoCEP);
                     index = CEPs.size() - 1;
                     if (Events instanceof ViaCepEvents) {
                         Events.onCEPSuccess(this);
                     }
-                }else {
-                    if (Events instanceof ViaCepEvents){
+                } else {
+                    if (Events instanceof ViaCepEvents) {
                         Events.onCEPError(currentCep);
                     }
                     throw new ViaCEPException("Não foi possível validar o cep", currentCep, ViaCEPException.class.getName());
                 }
             }
-        }else {
+        } else {
             throw new ViaCEPException("Nenhum CEP encontrado", currentCep, getClass().getName());
         }
+
+
+        return null;
     }
 
 
-    public String getCep() {
-    }
+
 }

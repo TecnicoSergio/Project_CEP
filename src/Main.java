@@ -1,11 +1,12 @@
 
 import java.util.Scanner;
+
 import ViaCep.ViaCEP;
 import ViaCep.ViaCepEvents;
 import ViaCep.ViaCEPException;
 
 
-public class ViaCEPTest implements ViaCepEvents{
+public class ViaCEPTest implements ViaCepEvents {
 
     @Override
     public void onCEPSuccess(ViaCEP cep) {
@@ -18,29 +19,31 @@ public class ViaCEPTest implements ViaCepEvents{
     }
 
     public class Main {
-        public static  void main(String[] args) {
+        public static void main(String[] args) {
             new ViaCEPTest().run();
 
         }
-        public void run(){
+
+        public void run() {
             ViaCEP viaCEP = new ViaCEP(this);
             String cep;
             Scanner scan = new Scanner(System.in);
-            System.out.println(ViaCEPTest.class.getName()+ "- digite sair para fechar o teste!! ");
+            System.out.println(ViaCEPTest.class.getName() + "- digite sair para fechar o teste!! ");
 
             do {
                 System.out.println("Digite um cep: ");
                 cep = scan.next();
-                if (!cep.equals("sair")){
-                    try{
+                if (!cep.equals("sair")) {
+                    try {
                         viaCEP.buscar(cep);
-                    }catch (ViaCEPException ex) {
+                    } catch (ViaCEPException ex) {
                         System.out.println("Ocorreu um erro na classe " + ex.getClasse() + ": " + ex.getMessage());
 
                     }
                 }
-            }while (!cep.equals("sair"));
+            } while (!cep.equals("sair"));
         }
+
         @Override
         public void onCEPSuccess(ViaCEP cep) {
             System.out.println();
@@ -55,8 +58,9 @@ public class ViaCEPTest implements ViaCepEvents{
             System.out.println();
 
         }
+
         @Override
-        public void onCEPError(String cep){
+        public void onCEPError(String cep) {
             System.out.println();
             System.out.println("Não foi possivel encontrar o CEP " + cep + "!");
             System.out.println();

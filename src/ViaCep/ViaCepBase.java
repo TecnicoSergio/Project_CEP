@@ -20,8 +20,9 @@ public abstract class ViaCepBase {
     protected String currentCep;
 
     protected ViaCepEvents Events;
+    private String urlToRead;
 
-    public ViaCepBase (){
+    public ViaCepBase() {
         CEPs = new ArrayList<>();
         index = -1;
         currentCep = "00000-000";
@@ -29,10 +30,10 @@ public abstract class ViaCepBase {
     }
 
     public abstract void buscar(String cep) throws ViaCEPException;
+
     public abstract void buscarCEP(CEP cep) throws ViaCEPException;
 
     /**
-     *
      * @param Uf
      * @param Localidade
      * @param Logradouro
@@ -41,41 +42,41 @@ public abstract class ViaCepBase {
     public Serializable buscarCEP(String Uf, String Localidade, String Logradouro) throws ViaCEPException {
         buscarCEP(new CEP(Logradouro, Localidade, Uf));
 
-        public int getIndex(){
+        public int getIndex () {
             return index;
         }
 
-        public int getSize(){
+        public int getSize () {
             return CEPs.size();
         }
 
-        public String getCep(){
+        public String getCep () {
             return CEPs.get(index).cep;
         }
 
-        public String getLogradouro() {
+        public String getLogradouro () {
             return CEPs.get(index).logradouro;
         }
 
-        public String getComplemento(){
+        public String getComplemento() {
             return CEPs.get(index).complemento;
         }
-        public String getBairro(){
+        public String getBairro () {
             return CEPs.get(index).bairro;
         }
-        public String getLocalidade(){
+        public String getLocalidade () {
             return CEPs.get(index).localidade;
         }
-        public String getUf(){
+        public String getUf () {
             return CEPs.get(index).uf;
         }
-        public String getIbge(){
+        public String getIbge () {
             return CEPs.get(index).ibje;
         }
-        public String getGia() {
+        public String getGia () {
             return CEPs.get(index).gia;
         }
-        public final String getHttpGET(String urlToRead) throws ViaCEPException {
+        public final String getHttpGET (String urlToRead) throws ViaCEPException {
             StringBuilder result = new StringBuilder();
 
             try {
@@ -90,15 +91,15 @@ public abstract class ViaCepBase {
 
             } catch (MalformedURLException | ProtocolException ex) {
                 // verifica os Eventos
-                if (Events instanceof ViaCEPEvents) {
-                    Events.onCEPError(currentCEP);
+                if (Events instanceof ViaCepEvents) {
+                    Events.onCEPError(currentCep);
                 }
 
                 throw new ViaCEPException(ex.getMessage(), ex.getClass().getName());
             } catch (IOException ex) {
 
-                if (Events instanceof ViaCEPEvents) {
-                    Events.onCEPError(currentCEP);
+                if (Events instanceof ViaCepEvents) {
+                    Events.onCEPError(currentCep);
                 }
 
                 throw new ViaCEPException(ex.getMessage(), ex.getClass().getName());
@@ -108,7 +109,7 @@ public abstract class ViaCepBase {
         }
 
 
-        public boolean move(int index) {
+        public boolean move ( int index){
             if (CEPs.size() > 0 && index >= 0 && index < CEPs.size()) {
                 this.index = index;
                 return true;
@@ -119,7 +120,7 @@ public abstract class ViaCepBase {
         }
 
 
-        public boolean moveFirst() {
+        public boolean moveFirst () {
             if (CEPs.size() > 0) {
                 index = 0;
                 return true;
@@ -130,7 +131,7 @@ public abstract class ViaCepBase {
         }
 
 
-        public boolean moveNext() {
+        public boolean moveNext () {
             if (CEPs.size() > 0 && (index + 1) < CEPs.size()) {
                 index += 1;
                 return true;
@@ -141,7 +142,7 @@ public abstract class ViaCepBase {
         }
 
 
-        public boolean movePrevious() {
+        public boolean movePrevious () {
             if (CEPs.size() > 0 && (index - 1) >= 0) {
                 index -= 1;
                 return true;
@@ -152,7 +153,7 @@ public abstract class ViaCepBase {
         }
 
 
-        public boolean moveLast() {
+        public boolean moveLast () {
             if (CEPs.size() > 0) {
                 index = CEPs.size() - 1;
                 return true;
@@ -163,12 +164,13 @@ public abstract class ViaCepBase {
         }
 
 
-        public List<CEP> getList() {
+        public List<CEP> getList () {
             return CEPs;
         }
 
-        
-        protected String formatStringToUri(String string) throws ViaCEPException {
+
+        protected String formatStringToUrl(String String string;
+        string) throws ViaCEPException {
             String out = null;
 
             // verifica está válido

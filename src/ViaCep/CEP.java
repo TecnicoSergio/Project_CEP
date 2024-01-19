@@ -15,7 +15,7 @@ public class CEP {
     /**
      * Cria um novo cep vazio
      */
-    public CEP(){
+    public CEP() {
         this.logradouro = null;
         this.complemento = null;
         this.bairro = null;
@@ -26,7 +26,6 @@ public class CEP {
     }
 
     /**
-     *
      * @param cep
      * @param logradouro
      * @param complemento
@@ -48,8 +47,21 @@ public class CEP {
         this.gia = gia;
     }
 
+    @Override
+    public String toString() {
+        return "CEP{" +
+                "cep='" + cep + '\'' +
+                ", logradouro='" + logradouro + '\'' +
+                ", complemento='" + complemento + '\'' +
+                ", bairro='" + bairro + '\'' +
+                ", localidade='" + localidade + '\'' +
+                ", uf='" + uf + '\'' +
+                ", ibje='" + ibje + '\'' +
+                ", gia='" + gia + '\'' +
+                '}';
+    }
+
     /**
-     *
      * @param logradouro
      * @param localidade
      * @param uf
