@@ -23,6 +23,8 @@ public class ViaCEP extends ViaCepBase {
         super();
         this.Events = events;
     }
+    
+    public String complemento;
 
     public ViaCEP(String cep, ViaCepEvents events) throws ViaCEPException {
         super();
@@ -38,7 +40,7 @@ public class ViaCEP extends ViaCepBase {
         currentCep = cep;
 
         String url = "http://viacep.com.br/ws" + cep + "/json/";
-        JSObject obj = new JSObject(getHttpGET(url)) {
+        JSObject obj = new JSObject() {
             @Override
             public Object call(String methodName, Object... args) throws JSException {
                 return null;
@@ -75,14 +77,14 @@ public class ViaCEP extends ViaCepBase {
             }
         };
         if (!has("erro")) {
-            CEP novoCEP = new CEP(getString("cep"),
-                    getString("logradouro"),
-                    getString("complemento"),
-                    getString("bairro"),
-                    getString("localidade"),
-                    getString("uf"),
-                    getString("ibge"),
-                    getString("gia"));
+            CEP novoCEP = new CEP(getCep(),
+                    getLogradouro(),
+                    getComplemento(),
+                    getBairro(),
+                    getLocalidade(),
+                    getUf(),
+                    getIbge(),
+                    getGia());
 
             CEPs.add(novoCEP);
             index = CEPs.size() - 1;
@@ -100,14 +102,16 @@ public class ViaCEP extends ViaCepBase {
 
     }
 
-    private boolean has(String erro) {
+    private boolean has(String erro){
+        return true;
     }
 
     private Object getHttpGET(String url) {
+        return true;
     }
 
     public void buscarCEP(CEP cep) throws ViaCEPException {
-        buscarCEP(cep.Uf, cep.Localidade, cep.Logradouro);
+        buscarCEP(cep.uf, cep.localidade, cep.logradouro);
     }
 
     public Serializable buscarCEP(String Uf, String localidade, String logradouro) throws ViaCEPException {
@@ -120,14 +124,14 @@ public class ViaCEP extends ViaCepBase {
             for (int i = 0; i < ceps.length(); i++) {
                 JSObject obj = ceps.getJSONObject(i);
                 if (!has("erro")) {
-                    CEP novoCEP = new CEP(getString("cep"),
-                            getString("logradouro"),
-                            getString("complemento"),
-                            getString("bairro"),
-                            getString("localidade"),
-                            getString("uf"),
-                            getString("ibge"),
-                            getString("gia"));
+                    CEP novoCEP = new CEP(getCep(),
+                            getLogradouro(),
+                            getComplemento(),
+                            getBairro(),
+                            getLocalidade(),
+                            getUf(),
+                            getIbge(),
+                            getGia());
 
                     CEPs.add(novoCEP);
                     index = CEPs.size() - 1;
@@ -150,5 +154,28 @@ public class ViaCEP extends ViaCepBase {
     }
 
 
+    public java.lang.String getCep() {
+    }
 
+    public java.lang.String getComplemento(){
+
+    }
+
+    public java.lang.String getLogradouro() {
+    }
+
+    public java.lang.String getBairro() {
+    }
+
+    public java.lang.String getLocalidade() {
+    }
+
+    public java.lang.String getUf() {
+    }
+
+    public java.lang.String getGia() {
+    }
+
+    public java.lang.String getIbge() {
+    }
 }

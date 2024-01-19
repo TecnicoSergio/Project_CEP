@@ -21,6 +21,8 @@ public abstract class ViaCepBase {
 
     protected ViaCepEvents Events;
     private String urlToRead;
+    private String string;
+    private Object String;
 
     public ViaCepBase() {
         CEPs = new ArrayList<>();
@@ -32,6 +34,14 @@ public abstract class ViaCepBase {
     public abstract void buscar(String cep) throws ViaCEPException;
 
     public abstract void buscarCEP(CEP cep) throws ViaCEPException;
+
+    public String getString() {
+        return string;
+    }
+
+    public void setString(String string) {
+        this.string = string;
+    }
 
     /**
      * @param Uf
@@ -56,60 +66,63 @@ public abstract class ViaCepBase {
 
         public String getLogradouro () {
             return CEPs.get(index).logradouro;
-        }
 
-        public String getComplemento() {
-            return CEPs.get(index).complemento;
-        }
-        public String getBairro () {
-            return CEPs.get(index).bairro;
-        }
-        public String getLocalidade () {
-            return CEPs.get(index).localidade;
-        }
-        public String getUf () {
-            return CEPs.get(index).uf;
-        }
-        public String getIbge () {
-            return CEPs.get(index).ibje;
-        }
-        public String getGia () {
-            return CEPs.get(index).gia;
-        }
-        public final String getHttpGET (String urlToRead) throws ViaCEPException {
-            StringBuilder result = new StringBuilder();
 
-            try {
-                URL url = new URL(urlToRead);
-                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                conn.setRequestMethod("GET");
-                BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-                String line;
-                while ((line = rd.readLine()) != null) {
-                    result.append(line);
-                }
-
-            } catch (MalformedURLException | ProtocolException ex) {
-                // verifica os Eventos
-                if (Events instanceof ViaCepEvents) {
-                    Events.onCEPError(currentCep);
-                }
-
-                throw new ViaCEPException(ex.getMessage(), ex.getClass().getName());
-            } catch (IOException ex) {
-
-                if (Events instanceof ViaCepEvents) {
-                    Events.onCEPError(currentCep);
-                }
-
-                throw new ViaCEPException(ex.getMessage(), ex.getClass().getName());
+            public String getComplemento () {
+                return CEPs.get(index).complemento;
+            }
+            public String getBairro () {
+                return CEPs.get(index).bairro;
+            }
+            public String getLocalidade () {
+                return CEPs.get(index).localidade;
+            }
+            public String getUf () {
+                return CEPs.get(index).uf;
+            }
+            public String getIbge () {
+                return CEPs.get(index).ibje;
+            }
+            public String getGia () {
+                return CEPs.get(index).gia;
             }
 
-            return result.toString();
-        }
+
+            //public String urlToRead1 = urlToRead;
+            public final String getHttpGET (String) throws{
+                StringBuilder result = new StringBuilder();
+
+                try {
+                    URL url = new URL(urlToRead);
+                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                    conn.setRequestMethod("GET");
+                    BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                    String line;
+                    while ((line = rd.readLine()) != null) {
+                        result.append(line);
+                    }
+
+                } catch (MalformedURLException | ProtocolException ex) {
+                    // verifica os Eventos
+                    if (Events instanceof ViaCepEvents) {
+                        Events.onCEPError(currentCep);
+                    }
+
+                    throw new ViaCEPException(ex.getMessage(), ex.getClass().getName());
+                } catch (IOException ex) {
+
+                    if (Events instanceof ViaCepEvents) {
+                        Events.onCEPError(currentCep);
+                    }
+
+                    throw new ViaCEPException(ex.getMessage(), ex.getClass().getName());
+                }
+
+                return result.toString();
+            }
 
 
-        public boolean move ( int index){
+            public boolean move ( int index)
             if (CEPs.size() > 0 && index >= 0 && index < CEPs.size()) {
                 this.index = index;
                 return true;
@@ -117,78 +130,82 @@ public abstract class ViaCepBase {
 
             this.index = -1;
             return false;
-        }
 
 
-        public boolean moveFirst () {
-            if (CEPs.size() > 0) {
-                index = 0;
-                return true;
-            }
-
-            index = -1;
-            return false;
-        }
-
-
-        public boolean moveNext () {
-            if (CEPs.size() > 0 && (index + 1) < CEPs.size()) {
-                index += 1;
-                return true;
-            }
-
-            index = -1;
-            return false;
-        }
-
-
-        public boolean movePrevious () {
-            if (CEPs.size() > 0 && (index - 1) >= 0) {
-                index -= 1;
-                return true;
-            }
-
-            index = -1;
-            return false;
-        }
-
-
-        public boolean moveLast () {
-            if (CEPs.size() > 0) {
-                index = CEPs.size() - 1;
-                return true;
-            }
-
-            index = -1;
-            return false;
-        }
-
-
-        public List<CEP> getList () {
-            return CEPs;
-        }
-
-
-        protected String formatStringToUrl(String String string;
-        string) throws ViaCEPException {
-            String out = null;
-
-            // verifica está válido
-            if (string != null && !string.isEmpty()) {
-                try {
-                    out = URLEncoder.encode(string, "utf-8");
-                    out = out.replace("+", "%20"); // força espaço como %20
-                } catch (UnsupportedEncodingException e) {
-                    throw new ViaCEPException("Não foi possível codificar o valor solicitado!", UnsupportedEncodingException.class.getName());
+            public boolean moveFirst () {
+                if (CEPs.size() > 0) {
+                    index = 0;
+                    return true;
                 }
-            } else {
-                throw new ViaCEPException("Valor nulo ou vazio informado!", String.class.getName());
+
+                index = -1;
+                return false;
             }
 
-            return out;
+
+            public boolean moveNext () {
+                if (CEPs.size() > 0 && (index + 1) < CEPs.size()) {
+                    index += 1;
+                    return true;
+                }
+
+                index = -1;
+                return false;
+            }
+
+
+            public boolean movePrevious () {
+                if (CEPs.size() > 0 && (index - 1) >= 0) {
+                    index -= 1;
+                    return true;
+                }
+
+                index = -1;
+                return false;
+            }
+
+
+            public boolean moveLast () {
+                if (CEPs.size() > 0) {
+                    index = CEPs.size() - 1;
+                    return true;
+                }
+
+                index = -1;
+                return false;
+            }
+
+
+            //public List<CEP> getList () {
+            //return CEPs;
+            //}
+
+
+            java.lang.String string1 = string;
+            Object string2 = String;
+            protected String formatStringToUrl (String) throws{
+                String out = null;
+
+                // verifica está válido
+                if (string != null && !string.isEmpty()) {
+                    try {
+                        out = URLEncoder.encode(string, "utf-8");
+                        out = out.replace("+", "%20"); // força espaço como %20
+                    } catch (UnsupportedEncodingException e) {
+                        throw new ViaCEPException("Não foi possível codificar o valor solicitado!", UnsupportedEncodingException.class.getName());
+                    }
+                } else {
+                    throw new ViaCEPException("Valor nulo ou vazio informado!", String.class.getName());
+                }
+
+                return out;
+            }
+
+
         }
 
-
+        //public java.lang.String getComplemento () {
+        //}
     }
 }
 

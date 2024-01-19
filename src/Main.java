@@ -25,7 +25,7 @@ public class ViaCEPTest implements ViaCepEvents {
         }
 
         public void run() {
-            ViaCEP viaCEP = new ViaCEP(this);
+            ViaCEP viaCEP = new ViaCEP();
             String cep;
             Scanner scan = new Scanner(System.in);
             System.out.println(ViaCEPTest.class.getName() + "- digite sair para fechar o teste!! ");
