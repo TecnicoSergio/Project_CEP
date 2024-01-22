@@ -52,7 +52,7 @@ public abstract class ViaCepBase {
     public Serializable buscarCEP(String Uf, String Localidade, String Logradouro) throws ViaCEPException {
         buscarCEP(new CEP(Logradouro, Localidade, Uf));
 
-        public int getIndex () {
+        /**public int getIndex () {
             return index;
         }
 
@@ -85,10 +85,10 @@ public abstract class ViaCepBase {
             }
             public String getGia () {
                 return CEPs.get(index).gia;
-            }
+            }**/
 
 
-            //public String urlToRead1 = urlToRead;
+
             public final String getHttpGET (String) throws{
                 StringBuilder result = new StringBuilder();
 
@@ -122,7 +122,7 @@ public abstract class ViaCepBase {
             }
 
 
-            public boolean move ( int index)
+            /**public boolean move ( int index)
             if (CEPs.size() > 0 && index >= 0 && index < CEPs.size()) {
                 this.index = index;
                 return true;
@@ -173,12 +173,9 @@ public abstract class ViaCepBase {
 
                 index = -1;
                 return false;
-            }
+            }**/
 
 
-            //public List<CEP> getList () {
-            //return CEPs;
-            //}
 
 
             java.lang.String string1 = string;
@@ -204,8 +201,7 @@ public abstract class ViaCepBase {
 
         }
 
-        //public java.lang.String getComplemento () {
-        //}
+
     }
 }
 
